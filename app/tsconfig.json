@@ -13,5 +13,5 @@
     "skipLibCheck": true,
     "target": "ESNext",
     "sourceRoot": "."
-  }
+  },
 }

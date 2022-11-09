@@ -11,8 +11,8 @@ type Props = {
 
 export const HomeScreen: React.FC<Props> = ({navigation}) => {
   return (
-    <View style={{flex: 1, alignItems: 'center'}}>
-      <Text>Home </Text>
+    <View className={''} style={{flex: 1, alignItems: 'center'}}>
+      <Text className={'text-red-500'}>Home </Text>
     </View>
   )
 }
