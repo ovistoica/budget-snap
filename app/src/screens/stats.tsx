@@ -1,7 +1,7 @@
 import {Button, Text, View} from 'react-native'
 import {StackNavigationProp} from '@react-navigation/stack'
-import {StatsStackParamList} from '../navigation/types'
 import React from 'react'
+import {StatsStackParamList} from '../navigation/types'
 
 type StatsNavProp = StackNavigationProp<StatsStackParamList, 'Stats'>
 
@@ -9,9 +9,9 @@ type Props = {
   navigation: StatsNavProp
 }
 
-export const StatsScreen: React.FC<Props> = ({navigation}) => {
+export const StatsScreen: React.FC<Props> = () => {
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View className={'flex items-center justify-center'}>
       <Text>Stats screen</Text>
       <Button title="Go to Details" />
     </View>

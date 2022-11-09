@@ -12,6 +12,11 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "target": "ESNext",
-    "sourceRoot": "."
-  },
+    "baseUrl": "./src",
+    "paths": {
+      "@app/*": [
+        "./*"
+      ]
+    }
+  }
 }

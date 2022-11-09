@@ -3,21 +3,22 @@ import {NavigationContainer} from '@react-navigation/native'
 import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import Ionicons from '@expo/vector-icons/Ionicons'
+import {Icon} from '../types'
+import {HomeScreen} from '../screens/home'
+import {SettingsScreen} from '../screens/settings'
+import {StatsScreen} from '../screens/stats'
+import {tailwindColors} from '../styles/colors'
 import {
   HomeStackParamList,
   SettingsStackParamList,
   StatsStackParamList,
 } from './types'
-import {Icon} from '../types'
-import {HomeScreen} from '../screens/home'
-import {SettingsScreen} from '../screens/settings'
-import {StatsScreen} from '../screens/stats'
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>()
 
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator screenOptions={{headerShown: false}}>
       <HomeStack.Screen name="Home" component={HomeScreen} />
     </HomeStack.Navigator>
   )
@@ -37,7 +38,7 @@ const StatsStack = createNativeStackNavigator<StatsStackParamList>()
 
 function StatsStackScreen() {
   return (
-    <StatsStack.Navigator>
+    <StatsStack.Navigator screenOptions={{headerShown: false}}>
       <StatsStack.Screen name="Stats" component={StatsScreen} />
     </StatsStack.Navigator>
   )
@@ -50,6 +51,7 @@ export function App() {
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={({route}) => ({
+          tabBarStyle: {backgroundColor: tailwindColors.slate['800']},
           headerShown: false,
           tabBarIcon: ({focused, color, size}) => {
             let iconName: Icon['name'] = focused
@@ -70,8 +72,8 @@ export function App() {
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />
           },
-          tabBarActiveTintColor: 'tomato',
-          tabBarInactiveTintColor: 'gray',
+          tabBarActiveTintColor: tailwindColors.sky['500'],
+          tabBarInactiveTintColor: tailwindColors.slate['400'],
         })}>
         <Tab.Screen name="Home" component={HomeStackScreen} />
         <Tab.Screen name="Stats" component={StatsStackScreen} />

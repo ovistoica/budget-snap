@@ -3685,3 +3685,13 @@ type IconName =
   | 'ionicons'
 
 export type Icon = IconProps<IconName>
+
+export type Transaction = {
+  id: string
+  name: string
+  date: string
+  amount: number
+  type: string
+  category: string
+  pictureUrl?: string
+}
