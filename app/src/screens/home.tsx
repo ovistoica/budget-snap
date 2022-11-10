@@ -12,12 +12,10 @@ import {useQuery} from '@tanstack/react-query'
 import Icon from '@expo/vector-icons/EvilIcons'
 import EntipoIcon from '@expo/vector-icons/Entypo'
 import AntIcon from '@expo/vector-icons/AntDesign'
-import {useImagePicker} from '../hooks/use-image-picker'
 import {HomeStackParamList} from '../navigation/types'
 import {tailwindColors} from '../styles/colors'
 import {Transaction} from '../types'
 import {fetchTransactions} from '@app/api/transactions'
-import {useAddTransaction} from '@app/hooks/mutations'
 
 type HomeNavProp = StackNavigationProp<HomeStackParamList, 'Home'>
 
@@ -102,28 +100,10 @@ const Header: React.FC = () => {
   )
 }
 
-export const HomeScreen: React.FC<Props> = () => {
-  const {
-    run: onPress,
-    isError,
-    data,
-    isLoading,
-    isSuccess,
-    createdAt,
-    reset,
-  } = useImagePicker()
-
-  const {mutate, isLoading: isAddTransactionLoading} = useAddTransaction()
-
-  const addTransaction = (transaction: Transaction) => {
-    mutate(transaction)
-    reset()
-  }
-
+export const HomeScreen: React.FC<Props> = ({navigation}) => {
   const {
     data: transactions,
     isLoading: isTransactionsLoading,
-    isError: isTransactionError,
     isSuccess: isTransactionSuccess,
   } = useQuery<Transaction[], Error>(['transactions'], fetchTransactions)
 
@@ -134,7 +114,7 @@ export const HomeScreen: React.FC<Props> = () => {
         <Pressable
           accessibilityRole="button"
           className="absolute bottom-8 right-8 flex h-14 w-14 items-center justify-center rounded-full bg-sky-600"
-          onPress={onPress}>
+          onPress={() => navigation.navigate('AddTransaction')}>
           <AntIcon name="plus" size={24} color="white" />
         </Pressable>
         <View className={'w-full pt-4 pl-4'}>
@@ -157,47 +137,6 @@ export const HomeScreen: React.FC<Props> = () => {
             />
           ) : null}
         </View>
-        {isLoading || isTransactionsLoading ? (
-          <Text className={'text-slate-200'}>Loading...</Text>
-        ) : null}
-        {isError || isTransactionError ? <Text>Error</Text> : null}
-        {isSuccess && !data?.cancelled ? (
-          <>
-            <Image
-              accessibilityIgnoresInvertColors={true}
-              className={'h-1/4 w-full rounded-xl object-cover'}
-              source={{uri: data?.uri}}
-            />
-            <Text className={'mt-4 text-2xl'}>
-              {createdAt?.year}-{createdAt?.month}-{createdAt?.day}{' '}
-              {createdAt?.hour}:{createdAt?.minutes}:{createdAt?.seconds}
-            </Text>
-          </>
-        ) : null}
-        <Pressable
-          accessibilityRole={'button'}
-          disabled={!(isSuccess && !data?.cancelled)}
-          onPress={() =>
-            addTransaction({
-              name: 'Test',
-              amount: 10,
-              date: `${createdAt?.year}-${createdAt?.month}-${createdAt?.day} ${createdAt?.hour}:${createdAt?.minutes}:${createdAt?.seconds}`,
-              type: 'income',
-              pictureUrl: !data?.cancelled ? data?.uri : undefined,
-              id: '5',
-              category: 'food',
-            })
-          }
-          className={`rounded-xl bg-sky-600 p-4 ${
-            !(isSuccess && !data?.cancelled) ? 'bg-gray-500' : ''
-          }`}>
-          <Text
-            className={`text-white ${
-              !(isSuccess && !data?.cancelled) ? 'text-gray-600' : ''
-            }`}>
-            {isAddTransactionLoading ? 'Loading..' : 'Add transaction'}
-          </Text>
-        </Pressable>
       </SafeAreaView>
     </View>
   )

@@ -1,6 +1,6 @@
 import {Transaction} from '../types'
 
-const dummyTransactions: Transaction[] = [
+let dummyTransactions: Transaction[] = [
   {
     id: '1',
     name: 'Starbucks',
@@ -43,7 +43,8 @@ export function fetchTransactions() {
 }
 
 export function addTransaction(transaction: Transaction) {
-  dummyTransactions.push(transaction)
+  dummyTransactions = [...dummyTransactions, transaction]
+  console.log('Added transaction', dummyTransactions)
   return new Promise<Transaction>((resolve) => {
     setTimeout(() => {
       resolve(transaction)

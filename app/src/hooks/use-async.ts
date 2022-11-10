@@ -29,11 +29,14 @@ interface AsyncState<Data = unknown> {
   status: ApiStatus
 }
 
-// Example usage:
-// const {data, error, status, run} = useAsync()
-// React.useEffect(() => {
-//   run(fetchPokemon(pokemonName))
-// }, [pokemonName, run])
+/** Example usage:
+ ```ts
+ const {data, error, status, isLoading, run} = useAsync()
+ React.useEffect(() => {
+   run(fetchPokemon(pokemonName))
+ }, [pokemonName, run])
+ ```
+ **/
 export function useAsync<Result = unknown>(
   initialState: AsyncState<Result> = {
     status: ApiStatus.Idle,
@@ -72,7 +75,24 @@ export function useAsync<Result = unknown>(
     (promise: Promise<Result>) => {
       if (!promise || !promise.then) {
         throw new Error(
-          `The argument passed to useAsync().run must be a promise. Maybe a function that's passed isn't returning anything?`
+          `
+The
+argument
+passed
+to
+useAsync().run
+must
+be
+a
+promise.Maybe
+a
+
+function that
+
+'s passed isn'
+t
+returning
+anything ? `
         )
       }
       safeSetState({status: ApiStatus.Pending})

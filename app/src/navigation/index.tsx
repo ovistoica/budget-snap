@@ -4,22 +4,28 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import {Icon} from '../types'
-import {HomeScreen} from '../screens/home'
-import {SettingsScreen} from '../screens/settings'
-import {StatsScreen} from '../screens/stats'
-import {tailwindColors} from '../styles/colors'
 import {
   HomeStackParamList,
   SettingsStackParamList,
   StatsStackParamList,
 } from './types'
+import {HomeScreen} from '@app/screens/home'
+import {SettingsScreen} from '@app/screens/settings'
+import {StatsScreen} from '@app/screens/stats'
+import {tailwindColors} from '@app/styles/colors'
+import {AddTransaction} from '@app/screens/add-transaction'
 
 const HomeStack = createNativeStackNavigator<HomeStackParamList>()
 
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator screenOptions={{headerShown: false}}>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Group>
+        <HomeStack.Screen name="Home" component={HomeScreen} />
+      </HomeStack.Group>
+      <HomeStack.Group screenOptions={{presentation: 'modal'}}>
+        <HomeStack.Screen name="AddTransaction" component={AddTransaction} />
+      </HomeStack.Group>
     </HomeStack.Navigator>
   )
 }
